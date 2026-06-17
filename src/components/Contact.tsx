@@ -3,11 +3,10 @@
 import { motion } from "framer-motion";
 
 const socialLinks = [
-  { label: "Email", href: "mailto:hello@threeohfivestudios.com", icon: "✉" },
-  { label: "Twitter / X", href: "https://x.com/305studios", icon: "𝕏" },
-  { label: "Instagram", href: "https://instagram.com/305studios", icon: "◎" },
-  { label: "LinkedIn", href: "https://linkedin.com/company/305studios", icon: "in" },
-  { label: "Dribbble", href: "https://dribbble.com/305studios", icon: "⬡" },
+  { label: "Email", href: "mailto:lova@threeohfivestudios.com", icon: "✉" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/lovarakoto", icon: "in" },
+  { label: "Behance", href: "https://behance.net/lovarakoto", icon: "Be" },
+  { label: "Vimeo", href: "https://vimeo.com/threeohfivestudios", icon: "◎" },
 ];
 
 export default function Contact() {
@@ -44,7 +43,7 @@ export default function Contact() {
           </p>
 
           <a
-            href="mailto:hello@threeohfivestudios.com"
+            href="mailto:lova@threeohfivestudios.com"
             className="inline-flex items-center gap-3 bg-coral hover:bg-coral/90 text-white heading-display text-xl px-10 py-5 rounded-full transition-all duration-300 hover:shadow-[0_0_48px_rgba(255,94,91,0.5)] mb-14"
           >
             START A PROJECT

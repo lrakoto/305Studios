@@ -6,10 +6,10 @@ const footerLinks = {
     { label: "Contact", href: "#contact" },
   ],
   Social: [
-    { label: "Twitter / X", href: "https://x.com/305studios" },
-    { label: "Instagram", href: "https://instagram.com/305studios" },
-    { label: "LinkedIn", href: "https://linkedin.com/company/305studios" },
-    { label: "Dribbble", href: "https://dribbble.com/305studios" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/lovarakoto" },
+    { label: "Behance", href: "https://behance.net/lovarakoto" },
+    { label: "Vimeo", href: "https://vimeo.com/threeohfivestudios" },
+    { label: "Email", href: "mailto:lova@threeohfivestudios.com" },
   ],
 };
 
@@ -31,7 +31,7 @@ export default function Footer() {
               visually striking websites.
             </p>
             <p className="label text-teal text-[10px] mt-4">
-              Miami, FL — Working Worldwide
+              Los Angeles, CA — Working Worldwide
             </p>
           </div>
 

@@ -41,6 +41,11 @@
     font-family: var(--font-anton), sans-serif;
   }
 
+  /* Radial gradient background */
+  .bg-gradient-radial {
+    background-image: radial-gradient(var(--tw-gradient-stops));
+  }
+
   /* Diagonal / angled section divider — apply to the section element */
   .clip-diagonal-top {
     clip-path: polygon(0 60px, 100% 0, 100% 100%, 0 100%);

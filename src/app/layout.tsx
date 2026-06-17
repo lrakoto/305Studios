@@ -18,7 +18,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "305 Studios — Web Experience Studio",
   description:
-    "305 Studios builds high-quality, high-impact, visually striking websites. Led by Lova Rakotomavonandrianina.",
+    "305 Studios — Lova Rakotomavonandrianina uses code and visual design to build brand experiences. High quality. High impact. Visually striking.",
   keywords: ["web design", "web development", "Next.js", "frontend", "305 Studios"],
   openGraph: {
     title: "305 Studios — Web Experience Studio",

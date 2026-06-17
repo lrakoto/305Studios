@@ -5,9 +5,9 @@ import Image from "next/image";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
 const stats = [
-  { value: 40, label: "Projects Shipped", suffix: "+" },
-  { value: 8, label: "Years Crafting the Web", suffix: "" },
-  { value: 96, label: "Avg. Lighthouse Score", suffix: "" },
+  { value: 10, label: "Years Crafting the Web", suffix: "+" },
+  { value: 50, label: "Projects Shipped", suffix: "+" },
+  { value: 95, label: "Avg. Lighthouse Score", suffix: "+" },
 ];
 
 function StatCounter({
@@ -139,18 +139,20 @@ export default function Studio() {
 
             <div className="space-y-5 text-white/60 font-body leading-relaxed mb-10">
               <p>
-                305 Studios exists for one reason: to build the kind of websites
-                that make people stop scrolling and start exploring. Every pixel
-                is intentional. Every interaction earns its place.
+                I use code and visual design to build brand experiences. 305
+                Studios is the studio behind the work — where strategy, design,
+                and engineering come together into something that actually moves
+                people.
               </p>
               <p>
-                Led by Lova Rakotomavonandrianina — designer, engineer, and
-                obsessive of the craft — the studio bridges the gap between
-                brand vision and living, breathing digital experiences.
+                Over 10 years I&apos;ve shipped for brands like Gundry MD, Newegg,
+                Mattel, and USC — from high-traffic e-commerce rebuilds to
+                design systems built for scale. Currently Design Engineer at
+                Golden Hippo.
               </p>
               <p>
-                Based in Miami.&nbsp;
-                <span className="text-white/40">Working everywhere.</span>
+                Based in Los Angeles.&nbsp;
+                <span className="text-white/40">Working worldwide.</span>
               </p>
             </div>
 

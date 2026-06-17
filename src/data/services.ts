@@ -11,32 +11,32 @@ export const services: Service[] = [
     id: "s1",
     title: "Brand & Web Design",
     blurb:
-      "Visual systems that speak before a word is read. From logo mark to full brand language, we craft identities that are bold, cohesive, and built to stand out.",
+      "Visual systems that speak before a word is read. From design systems to full UI/UX flows, every element is crafted to be bold, cohesive, and conversion-ready.",
     icon: "✦",
-    tags: ["Brand Identity", "UI/UX", "Design Systems", "Figma"],
+    tags: ["UI/UX Design", "Design Systems", "Visual Design", "Figma"],
   },
   {
     id: "s2",
     title: "Frontend Engineering",
     blurb:
-      "Pixel-perfect, performant builds using Next.js, TypeScript, and the modern web stack. We write code that's as clean as the designs it ships.",
+      "Pixel-perfect, performant builds from Figma to production. React, Next.js, and modern stacks — clean code that ships fast and scales cleanly.",
     icon: "◈",
-    tags: ["Next.js", "TypeScript", "React", "Tailwind"],
+    tags: ["React", "Next.js", "TypeScript", "Builder.io"],
   },
   {
     id: "s3",
-    title: "Interactive & Motion",
+    title: "CMS & Platform Builds",
     blurb:
-      "Scroll-driven narratives, 3D product viewers, and micro-interactions that make visitors stop and say 'how did they do that?'",
+      "Headless CMS setups, WordPress builds, and complex platform integrations — including Salesforce-backed e-commerce at high-traffic scale.",
     icon: "◎",
-    tags: ["Framer Motion", "Three.js", "GSAP", "WebGL"],
+    tags: ["WordPress", "Builder.io", "Salesforce", "Headless CMS"],
   },
   {
     id: "s4",
-    title: "Performance & SEO",
+    title: "Performance & CRO",
     blurb:
-      "Fast sites rank. Fast sites convert. We tune for Lighthouse 90+ across every category — Core Web Vitals, accessibility, and structured data included.",
+      "Fast sites rank, and tested sites convert. A/B testing, analytics instrumentation, Core Web Vitals tuning, and data-driven iteration baked into every project.",
     icon: "⬡",
-    tags: ["Core Web Vitals", "SEO", "a11y", "Analytics"],
+    tags: ["A/B Testing", "CRO", "Core Web Vitals", "Analytics"],
   },
 ];

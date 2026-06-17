@@ -4,66 +4,62 @@ export interface Project {
   description: string;
   category: string;
   imageUrl: string;
-  /** used for the hero background (wider crop) */
   heroBgUrl: string;
-  /** optional: span extra columns or rows in the work grid */
   featured?: boolean;
   span?: "wide" | "tall" | "large";
 }
 
 export const projects: Project[] = [
   {
-    id: "p1",
-    title: "SOLARIS AGENCY",
-    description: "Brand identity & immersive web experience",
-    category: "Web Design",
-    imageUrl: "https://picsum.photos/seed/solaris/900/600",
-    heroBgUrl: "https://picsum.photos/seed/solaris/1920/1080",
+    id: "gundry-md",
+    title: "GUNDRY MD",
+    description: "High-traffic e-commerce rebuild — Builder.io + Salesforce",
+    category: "Frontend Dev",
+    imageUrl: "https://picsum.photos/seed/gundrymd/900/600",
+    heroBgUrl: "https://picsum.photos/seed/gundrymd/1920/1080",
     featured: true,
     span: "large",
   },
   {
-    id: "p2",
-    title: "FORM & VOID",
-    description: "Conceptual portfolio for a Berlin architect",
-    category: "Frontend Dev",
-    imageUrl: "https://picsum.photos/seed/formvoid/900/1100",
-    heroBgUrl: "https://picsum.photos/seed/formvoid/1920/1080",
+    id: "autodex",
+    title: "AUTODEX",
+    description: "Car database web app with API integration & authentication",
+    category: "Web Design",
+    imageUrl: "https://picsum.photos/seed/autodex/900/1100",
+    heroBgUrl: "https://picsum.photos/seed/autodex/1920/1080",
     span: "tall",
   },
   {
-    id: "p3",
-    title: "NEON NORTH",
-    description: "E-commerce & motion for a streetwear label",
-    category: "Interactive",
-    imageUrl: "https://picsum.photos/seed/neonnorth/900/600",
-    heroBgUrl: "https://picsum.photos/seed/neonnorth/1920/1080",
+    id: "badlands",
+    title: "BADLANDS",
+    description: "Brand experience & design system",
+    category: "Brand & Design",
+    imageUrl: "https://picsum.photos/seed/badlands305/900/600",
+    heroBgUrl: "https://picsum.photos/seed/badlands305/1920/1080",
   },
   {
-    id: "p4",
-    title: "ATLAS COLLECTIVE",
-    description: "Data-driven dashboard with real-time motion",
-    category: "Frontend Dev",
-    imageUrl: "https://picsum.photos/seed/atlas/900/600",
-    heroBgUrl: "https://picsum.photos/seed/atlas/1920/1080",
+    id: "newegg",
+    title: "NEWEGG",
+    description: "Email marketing & visual design at scale",
+    category: "Visual Design",
+    imageUrl: "https://picsum.photos/seed/newegg305/900/600",
+    heroBgUrl: "https://picsum.photos/seed/newegg305/1920/1080",
     span: "wide",
   },
   {
-    id: "p5",
-    title: "MIRA BEAUTY",
-    description: "Luxury e-commerce with 3D product viewer",
-    category: "3D & Motion",
-    imageUrl: "https://picsum.photos/seed/mirabeauty/900/600",
-    heroBgUrl: "https://picsum.photos/seed/mirabeauty/1920/1080",
+    id: "mattel",
+    title: "MATTEL",
+    description: "UI/UX design & Figma-to-production implementation",
+    category: "UI/UX",
+    imageUrl: "https://picsum.photos/seed/mattel305/900/600",
+    heroBgUrl: "https://picsum.photos/seed/mattel305/1920/1080",
   },
   {
-    id: "p6",
-    title: "DUNE STUDIOS",
-    description: "Creative agency site with scroll-driven narrative",
-    category: "Web Design",
-    imageUrl: "https://picsum.photos/seed/dunestudios/900/600",
-    heroBgUrl: "https://picsum.photos/seed/dunestudios/1920/1080",
+    id: "usc",
+    title: "USC",
+    description: "Frontend development & CMS integration",
+    category: "Frontend Dev",
+    imageUrl: "https://picsum.photos/seed/usc305/900/600",
+    heroBgUrl: "https://picsum.photos/seed/usc305/1920/1080",
   },
 ];
-
-export const heroProjects = projects.slice(0, 4);
