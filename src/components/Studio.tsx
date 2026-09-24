@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import TiltCard from "./TiltCard";
 
 const stats = [
   { value: 10, label: "Years Crafting the Web", suffix: "+" },
@@ -97,7 +98,7 @@ export default function Studio() {
             <div className="absolute -inset-4 bg-gradient-to-br from-coral/20 via-sunset/10 to-teal/10 rounded-full blur-3xl opacity-60" />
 
             {/* Photo placeholder */}
-            <div className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-sm overflow-hidden">
+            <TiltCard intensity={5} className="relative aspect-[3/4] max-w-sm mx-auto lg:mx-0 rounded-sm overflow-hidden">
               <Image
                 src="https://picsum.photos/seed/lova/600/800"
                 alt="Lova Rakotomavonandrianina — Founder & Creative Lead"
@@ -116,7 +117,7 @@ export default function Studio() {
                   Founder &amp; Creative Lead
                 </p>
               </div>
-            </div>
+            </TiltCard>
           </motion.div>
 
           {/* Right — bio + stats */}

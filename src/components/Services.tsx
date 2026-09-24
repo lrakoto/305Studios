@@ -2,14 +2,23 @@
 
 import { motion } from "framer-motion";
 import { services } from "@/data/services";
+import TiltCard from "./TiltCard";
 
 export default function Services() {
   return (
     <section
       id="services"
-      className="relative bg-sand clip-diagonal-top-lg pt-24 pb-24 md:pt-32 md:pb-36 -mt-12"
+      className="relative pt-24 pb-24 md:pt-32 md:pb-36 -mt-12"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Sand background as its own child — clip-path here, not on the section,
+          so the section doesn't create a stacking context. Particles (z=2) show
+          over this bg layer (z=1) but below the card content (z=10). */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-sand clip-diagonal-top-lg"
+        style={{ zIndex: 1 }}
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -33,13 +42,13 @@ export default function Services() {
         {/* Service cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
           {services.map((service, i) => (
+            <TiltCard key={service.id} intensity={5}>
             <motion.div
-              key={service.id}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: i * 0.1, ease: "easeOut" }}
-              className="group bg-white border border-ink/8 p-6 hover:border-teal/50 transition-all duration-300 hover:shadow-[0_8px_40px_rgba(27,199,180,0.12)]"
+              className="group bg-white border border-ink/8 p-6 hover:border-teal/50 transition-all duration-300 hover:shadow-[0_8px_40px_rgba(27,199,180,0.12)] h-full"
             >
               {/* Icon */}
               <div className="text-2xl text-teal mb-5 group-hover:scale-110 transition-transform duration-200 inline-block">
@@ -66,6 +75,7 @@ export default function Services() {
                 ))}
               </div>
             </motion.div>
+            </TiltCard>
           ))}
         </div>
 

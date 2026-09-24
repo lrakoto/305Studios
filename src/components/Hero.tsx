@@ -1,132 +1,231 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import CylinderCarousel from "./CylinderCarousel";
+import { useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { projects } from "@/data/projects";
 
+const AUTO_MS = 6000;
+const EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
+const N = projects.length;
+
+const imgVariants = {
+  enter: (dir: number) => ({
+    x: dir * 60, scale: 1.08, opacity: 0,
+  }),
+  center: {
+    x: 0, scale: 1, opacity: 1,
+    transition: { duration: 1.0, ease: EASE },
+  },
+  exit: (dir: number) => ({
+    x: dir * -40, scale: 0.97, opacity: 0,
+    transition: { duration: 0.6, ease: EASE },
+  }),
+};
+
+const infoVariants = {
+  enter: { y: 16, opacity: 0 },
+  center: { y: 0, opacity: 1, transition: { duration: 0.45, delay: 0.35 } },
+  exit:   { y: -8, opacity: 0, transition: { duration: 0.25 } },
+};
+
 export default function Hero() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const project = projects[activeIndex];
+  const [active, setActive] = useState(0);
+  const [dir, setDir]       = useState(1);
+  const [progress, setProgress] = useState(0);
+  const startRef = useRef(Date.now());
+  const rafRef   = useRef<number>(0);
+  const prefersReduced = useReducedMotion();
+
+  const goTo = useCallback((i: number, d: number) => {
+    setDir(d);
+    setActive(i);
+    setProgress(0);
+    startRef.current = Date.now();
+  }, []);
+
+  const next = useCallback(() => goTo((active + 1) % N, 1), [active, goTo]);
+  const prev = useCallback(() => goTo((active - 1 + N) % N, -1), [active, goTo]);
+
+  useEffect(() => {
+    if (prefersReduced) return;
+    const tick = () => {
+      const pct = Math.min((Date.now() - startRef.current) / AUTO_MS, 1);
+      setProgress(pct);
+      if (pct >= 1) { next(); return; }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [active, next, prefersReduced]);
+
+  const project = projects[active];
 
   return (
     <section
-      className="relative w-full min-h-[92vh] flex items-center overflow-hidden bg-ink"
+      className="relative w-full min-h-screen overflow-hidden bg-ink"
       aria-label="Featured projects"
     >
-      {/* ── Background: ambient glow that shifts with active project ── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-      >
-        {/* Radial glow — right side, behind carousel */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-gradient-radial from-coral/12 via-sunset/6 to-transparent blur-3xl translate-x-1/3" />
-        {/* Secondary teal glow — top left */}
-        <div className="absolute -left-32 -top-32 w-[500px] h-[500px] rounded-full bg-teal/5 blur-3xl" />
-        {/* Subtle grid lines */}
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-        />
-      </div>
+      {/* ── Full-bleed cinematic background ──────────────── */}
+      <AnimatePresence mode="sync" custom={dir}>
+        <motion.div
+          key={active}
+          custom={dir}
+          variants={prefersReduced ? {} : imgVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="absolute inset-0"
+        >
+          <Image
+            src={project.heroBgUrl}
+            alt={project.title}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          {/* Cinematic gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/50 to-ink/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/40" />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* ── Main content ─────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36">
-        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-16 lg:gap-8">
+      {/* ── Main content ─────────────────────────────────── */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-between pt-28 pb-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* ── Left: text ─────────────────────────────────────── */}
+        {/* Studio headline — static, always visible */}
+        <div className="flex-1 flex flex-col justify-center max-w-3xl">
+          {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex-1 max-w-2xl"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="inline-flex items-center gap-2 glass px-3 py-1.5 rounded-full mb-8 w-fit"
           >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 glass px-3 py-1.5 rounded-full mb-8">
-              <span className="text-teal text-xs">✦</span>
-              <span className="label text-white/60 text-[10px]">
-                Web Experience Studio
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="heading-display text-[clamp(3.5rem,8vw,7.5rem)] text-white leading-[0.88] mb-6 tracking-tighter">
-              WE BUILD
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-coral via-sunset to-coral bg-[length:200%] animate-[shimmer_4s_ease_infinite]">
-                WEBSITES
-              </span>
-              <br />
-              THAT HIT
-              <br />
-              DIFFERENT
-            </h1>
-
-            <p className="text-white/50 text-base md:text-lg font-body mb-10 max-w-md">
-              High quality.&nbsp;&nbsp;High impact.&nbsp;&nbsp;Visually striking.
-            </p>
-
-            <div className="flex flex-wrap gap-4 mb-14">
-              <a
-                href="#work"
-                className="inline-flex items-center gap-2 glass border-white/20 hover:border-coral/60 text-white label px-6 py-3 rounded-full transition-all duration-300 hover:text-coral"
-              >
-                See Our Work ↓
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 bg-coral hover:bg-coral/90 text-white label px-6 py-3 rounded-full transition-all duration-300 hover:shadow-[0_0_32px_rgba(255,94,91,0.55)]"
-              >
-                Start a Project
-              </a>
-            </div>
-
-            {/* Active project callout */}
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex items-center gap-4 pt-6 border-t border-white/10"
-            >
-              <div className="w-1.5 h-8 bg-coral rounded-full flex-shrink-0" />
-              <div>
-                <p className="label text-teal text-[9px] mb-0.5">{project.category}</p>
-                <p className="heading-display text-white text-base">{project.title}</p>
-                <p className="text-white/40 text-xs font-body mt-0.5">{project.description}</p>
-              </div>
-              <a
-                href="#work"
-                className="ml-auto label text-white/30 hover:text-teal transition-colors text-[10px] flex-shrink-0"
-              >
-                View All ▸
-              </a>
-            </motion.div>
+            <span className="text-teal text-xs">✦</span>
+            <span className="label text-white/60 text-[10px]">Web Experience Studio</span>
           </motion.div>
 
-          {/* ── Right: 3D cylinder carousel ─────────────────── */}
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            className="heading-display text-[clamp(3.5rem,8.5vw,8rem)] text-white leading-[0.88] tracking-tighter mb-6"
+          >
+            WE BUILD
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-coral via-sunset to-coral bg-[length:200%] animate-[shimmer_4s_ease_infinite]">
+              WEBSITES
+            </span>
+            <br />
+            THAT HIT
+            <br />
+            DIFFERENT
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-white/50 text-base md:text-lg font-body mb-10 max-w-md"
+          >
+            High quality.&nbsp;&nbsp;High impact.&nbsp;&nbsp;Visually striking.
+          </motion.p>
+
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="flex-shrink-0 hidden sm:flex items-center justify-center"
-            style={{ perspective: "none" }} // let CylinderCarousel manage its own
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex flex-wrap gap-4"
           >
-            <CylinderCarousel onSlideChange={setActiveIndex} />
+            <a
+              href="#work"
+              className="inline-flex items-center gap-2 glass border-white/20 hover:border-coral/60 text-white label px-6 py-3 rounded-full transition-all duration-300 hover:text-coral"
+            >
+              See Our Work ↓
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 bg-coral hover:bg-coral/90 text-white label px-6 py-3 rounded-full transition-all duration-300 hover:shadow-[0_0_32px_rgba(255,94,91,0.55)]"
+            >
+              Start a Project
+            </a>
           </motion.div>
+        </div>
 
+        {/* ── Bottom bar: project info + controls ──────── */}
+        <div className="py-8 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+
+          {/* Active project info */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              variants={infoVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <span className="block label text-teal text-[9px] mb-1.5">{project.category}</span>
+              <span className="block heading-display text-white text-2xl md:text-3xl leading-tight">
+                {project.title}
+              </span>
+              <span className="block text-white/40 text-sm font-body mt-1">{project.description}</span>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Thumbnail strip + prev/next */}
+          <div className="flex items-center gap-4 flex-shrink-0">
+            {/* Thumbnails */}
+            <div className="hidden sm:flex gap-2">
+              {projects.map((p, i) => (
+                <button
+                  key={p.id}
+                  onClick={() => goTo(i, i > active ? 1 : -1)}
+                  aria-label={`Go to ${p.title}`}
+                  className={`relative rounded overflow-hidden transition-all duration-300 ${
+                    i === active
+                      ? "w-14 h-10 ring-1 ring-coral"
+                      : "w-9 h-10 opacity-35 hover:opacity-65"
+                  }`}
+                >
+                  <Image src={p.imageUrl} alt={p.title} fill className="object-cover" sizes="56px" />
+                </button>
+              ))}
+            </div>
+
+            {/* Prev / Next */}
+            <div className="flex gap-2">
+              <button
+                onClick={prev}
+                aria-label="Previous project"
+                className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/60 hover:text-white transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-coral"
+              >←</button>
+              <button
+                onClick={next}
+                aria-label="Next project"
+                className="w-10 h-10 rounded-full glass flex items-center justify-center text-white/60 hover:text-white transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-coral"
+              >→</button>
+            </div>
+
+            {/* Slide counter */}
+            <div className="flex items-center gap-1.5 ml-1">
+              <span className="heading-display text-coral text-sm">{String(active + 1).padStart(2, "0")}</span>
+              <span className="text-white/20 text-xs">/</span>
+              <span className="heading-display text-white/30 text-sm">{String(N).padStart(2, "0")}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* ── Bottom diagonal fade ──────────────────────────────── */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, #0B0B0F)" }}
-      />
+      {/* ── Coral progress line ──────────────────────────── */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10 z-20">
+        <motion.div
+          className="h-full bg-coral origin-left"
+          style={{ scaleX: progress }}
+        />
+      </div>
     </section>
   );
 }

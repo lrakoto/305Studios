@@ -13,12 +13,18 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative bg-mist clip-diagonal-top pt-24 pb-24 md:pt-32 md:pb-36 -mt-12 overflow-hidden"
+      className="relative pt-24 pb-24 md:pt-32 md:pb-36 -mt-12 overflow-hidden"
     >
+      {/* Mist background — same clip-path-off-section trick as Services */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-mist clip-diagonal-top"
+        style={{ zIndex: 1 }}
+      />
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-coral/10 via-sunset/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-coral/10 via-sunset/5 to-transparent rounded-full blur-3xl pointer-events-none" style={{ zIndex: 1 }} />
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}

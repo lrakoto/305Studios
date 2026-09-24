@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Project } from "@/data/projects";
+import TiltCard from "./TiltCard";
 
 interface WorkCardProps {
   project: Project;
@@ -20,12 +21,13 @@ export default function WorkCard({ project, index }: WorkCardProps) {
       : "";
 
   return (
+    <TiltCard intensity={4} className={spanClass}>
     <motion.article
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
-      className={`group relative overflow-hidden rounded-sm bg-white/5 cursor-pointer ${spanClass}`}
+      className="group relative overflow-hidden rounded-sm bg-white/5 cursor-pointer h-full"
     >
       {/* Image */}
       <div className="relative w-full h-full min-h-[280px] overflow-hidden">
@@ -67,5 +69,6 @@ export default function WorkCard({ project, index }: WorkCardProps) {
         </div>
       </div>
     </motion.article>
+    </TiltCard>
   );
 }

@@ -5,10 +5,12 @@ import Services from "@/components/Services";
 import Studio from "@/components/Studio";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ParticleBackground from "@/components/ParticleBackground";
 
 export default function Home() {
   return (
     <main>
+      <ParticleBackground />
       <Header />
       <Hero />
       <WorkGrid />
